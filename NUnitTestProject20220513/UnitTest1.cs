@@ -8,6 +8,7 @@ namespace NUnitTestProject20220513
         public void Setup()
         {
             int i = 0;
+            i = 2;
         }
 
         [Test]
