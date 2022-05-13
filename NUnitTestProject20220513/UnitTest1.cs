@@ -7,6 +7,7 @@ namespace NUnitTestProject20220513
         [SetUp]
         public void Setup()
         {
+            int i = 0;
         }
 
         [Test]
