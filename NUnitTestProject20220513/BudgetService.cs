@@ -8,6 +8,7 @@ namespace NUnitTestProject20220513
     public class BudgetService
     {
         private IBudgetRepository budgetRepository;
+
         public BudgetService(IBudgetRepository _budgetRepository)
         {
             budgetRepository = _budgetRepository;
@@ -16,56 +17,55 @@ namespace NUnitTestProject20220513
 
         public decimal Query(DateTime start, DateTime end)
         {
-            if (end < start)
+            if (InvalidQueryDate(start, end))
             {
                 return 0;
             }
 
             var data = budgetRepository.GetAll();
 
-                int daysInMonth = DaysInMonth(start);
-                DateTime tempStart = new DateTime(start.Year,start.Month, 1);
-                int i = 0;
+                DateTime current = new DateTime(start.Year,start.Month, 1);
                 decimal total = 0;
-            while (true)
-            {
-                var budget = data.FirstOrDefault(m => m.YearMonth == tempStart.ToString("yyyyMM")) ?? new Budget();
+                while (true)
+                {
+                    var budget = data.FirstOrDefault(m => m.YearMonth == current.ToString("yyyyMM")) ?? new Budget();
 
-                if (start.ToString("yyyyMM") == end.ToString("yyyyMM"))
-                {
-                    total = total + budget.Amount / DaysInMonth(tempStart) * (end.Day - start.Day +1);
-                }
-                else if (tempStart.ToString("yyyyMM") == start.ToString("yyyyMM") )
-                {
-                    total = total + budget.Amount / DaysInMonth(tempStart) *  (DaysInMonth(tempStart) - start.Day + 1 );
-                }
-                else if (tempStart.ToString("yyyyMM") == end.ToString("yyyyMM"))
-                {
-                    total = total +  budget.Amount / DaysInMonth(tempStart) * (end.Day);
-                }
-                else
-                {
-                    total = total + budget.Amount;
+                    if (start.ToString("yyyyMM") == end.ToString("yyyyMM"))
+                    {
+                        total +=  budget.Amount / DaysInMonth(current) * (end.Day - start.Day + 1);
+                    }
+                    else if (current.ToString("yyyyMM") == start.ToString("yyyyMM"))
+                    {
+                        total += budget.Amount / DaysInMonth(current) *
+                            (DaysInMonth(current) - start.Day + 1);
+                    }
+                    else if (current.ToString("yyyyMM") == end.ToString("yyyyMM"))
+                    {
+                        total +=  budget.Amount / DaysInMonth(current) * (end.Day);
+                    }
+                    else
+                    {
+                        total += budget.Amount;
+                    }
+
+                    if (current.ToString("yyyyMM") == end.ToString("yyyyMM"))
+                    {
+                        break;
+                    }
+
+                    current = current.AddMonths(1);
+
                 }
 
-                if (tempStart.ToString("yyyyMM") == end.ToString("yyyyMM"))
-                {
-                    break;
-                }
-                tempStart = tempStart.AddMonths(1);
-
-                }
-              
                 return total;
 
 
         }
 
-        // public int MonthDiff(DateTime start, DateTime end)
-        // {
-        //
-        // }
-
+        private bool InvalidQueryDate(DateTime start, DateTime end)
+        {
+            return end < start;
+        }
 
         private int DaysInMonth(DateTime start)
         {
