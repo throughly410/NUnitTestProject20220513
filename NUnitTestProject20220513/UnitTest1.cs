@@ -7,14 +7,14 @@ namespace NUnitTestProject20220513
         [SetUp]
         public void Setup()
         {
-            int i = 0;
-            i = 2;
+
         }
 
         [Test]
         public void Test1()
         {
-            Assert.Pass();
+            
         }
+
     }
 }
