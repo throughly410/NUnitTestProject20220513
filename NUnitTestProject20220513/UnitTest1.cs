@@ -17,7 +17,7 @@ namespace NUnitTestProject20220513
         [TestCase("aDb2","A-Dd-Bbb-2222")]
         [TestCase("","")]
         [TestCase("  "," -  ")]
-        public void Test_a_To_A(string input, string expected)
+        public void Test_StringTransformer(string input, string expected)
         {
             var stringTransformer = new StringTransformer();
             string actual = stringTransformer.Transform(input);
