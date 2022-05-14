@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -71,16 +70,5 @@ namespace NUnitTestProject20220513
         {
             return DateTime.DaysInMonth(start.Year, start.Month);
         }
-    }
-
-    public class Budget
-    {
-        public string YearMonth { get; set; }
-        public int Amount { get; set; }
-    }
-
-    public interface IBudgetRepository
-    {
-        public List<Budget> GetAll();
     }
 }
