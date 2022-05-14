@@ -14,7 +14,7 @@ namespace NUnitTestProject20220513
         [Test]
         [TestCase("a","A")]
         [TestCase("123","1-22-333")]
-        [TestCase("aDb2","A-dd-BBB-2222")]
+        [TestCase("aDb2","A-Dd-Bbb-2222")]
         [TestCase("","")]
         [TestCase("  "," -  ")]
         public void Test_a_To_A(string input, string expected)
@@ -45,20 +45,10 @@ namespace NUnitTestProject20220513
                 bool isEnglishCase = IsEnglishCase(currentChar);
                 if (isEnglishCase)
                 {
-                    if (IsLowerCase(currentChar))
+                    result.Append(char.ToUpper(currentChar));
+                    for (int j = 1; j < charAmount; j++)
                     {
-                        for (int j = 0; j < charAmount; j++)
-                        {
-                            result.Append(char.ToUpper(currentChar));
-                        }
-                    }
-                    else
-                    {
-                        for (int j = 0; j < charAmount; j++)
-                        {
-                            result.Append(char.ToLower(currentChar));
-                        }
-                        
+                        result.Append(char.ToLower(currentChar));
                     }
                 }
                 else
